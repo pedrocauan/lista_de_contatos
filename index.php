@@ -18,12 +18,31 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
 
 <body>
     <div class="main-container">
+        <?php 
+            // Ve se o formulário foi enviado
+            if(!empty($_POST)){
+                $nome = (string) addslashes($_POST["nome"]);
+                $telefone = (string) addslashes($_POST["telefone"]);
+                $email = (string) addslashes($_POST["email"]);
+
+                // Verifica se os campos estao vazios
+                if(!empty($nome) && !empty($telefone) && !empty($email)){
+                    if(!$p -> cadastrarPessoa($nome, $telefone, $email)){
+                        echo "Email já cadastrado";
+                    }
+                }   
+                else{
+                    echo "Preencha todos os campos";
+                }
+            }
+        ?>
         <section id="esquerda">
-            <form action="">
+            <form action="" method="POST">
                 <h2>Cadastrar Pessoa</h2>
                 <!-- Campo Nome-->
                 <label for="nome">Nome</label>
                 <input type="text" name="nome" id="nome">
+
                 <!-- Campo Telefone-->
                 <label for="telefone">Telefone</label>
                 <input type="text" name="telefone" id="telefone">
@@ -45,7 +64,7 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
                 </tr>
                 <?php
                 $dados = $p->buscarDados();
-                // mostra os registros na tabela de contatos
+                // mostra os registros na tabela de contatos caso exista pessoas cadastradas
                 if (count($dados) > 0) {
                     for ($i = 0; $i <  count($dados); $i++) {
                         echo "<tr>";
@@ -57,8 +76,10 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
                         ?> <td><a href="">Editar</a><a href="">Excluir</a></td> <?php
                         echo "</tr>";
                     }
-                
-               
+                }
+                //banco vazio
+                else {
+                    echo "Ainda não há pessoas cadastradas";
                 }
                 ?>
 
