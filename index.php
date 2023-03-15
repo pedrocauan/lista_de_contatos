@@ -27,6 +27,7 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
 
                 // Verifica se os campos estao vazios
                 if(!empty($nome) && !empty($telefone) && !empty($email)){
+                    //Ve se o usuario já está cadastrado
                     if(!$p -> cadastrarPessoa($nome, $telefone, $email)){
                         echo "Email já cadastrado";
                     }
