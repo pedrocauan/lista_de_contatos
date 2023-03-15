@@ -21,6 +21,7 @@ class Pessoa {
         }
     }
 
+    //Busca os dados e coloca no campo direito da tela
     public function buscarDados(){
         //ORDER BY  id DESC ordena os id de maneira decrescente
         $res = array();

@@ -1,3 +1,10 @@
+<?php
+require_once("Pessoa.php");
+//conecta com a database
+$p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,13 +43,25 @@
                     <td>Telefone</td>
                     <td colspan="2">Email</td>
                 </tr>
+                <?php
+                $dados = $p->buscarDados();
+                // mostra os registros na tabela de contatos
+                if (count($dados) > 0) {
+                    for ($i = 0; $i <  count($dados); $i++) {
+                        echo "<tr>";
+                        foreach ($dados[$i] as $key => $value) {
+                            if ($key !== "id") {
+                                echo "<td>" . $value . "</td>";
+                            }
+                        }
+                        ?> <td><a href="">Editar</a><a href="">Excluir</a></td> <?php
+                        echo "</tr>";
+                    }
+                
+               
+                }
+                ?>
 
-                <tr>
-                    <td>Maria</td>
-                    <td>11987776645</td>
-                    <td>mariazinha@gmail.com</td>
-                    <td><a href="">Editar</a><a href="">Excluir</a></td>
-                </tr>
             </table>
         </section>
     </div>
