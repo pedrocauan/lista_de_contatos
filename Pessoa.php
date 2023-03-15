@@ -19,9 +19,15 @@ class Pessoa {
             exit();
 
         }
-
     }
 
+    public function buscarDados(){
+        //ORDER BY  id DESC ordena os id de maneira decrescente
+        $res = array();
+        $cmd = $this -> pdo -> query("SELECT * FROM pessoa ORDER BY nome");
+        $res = $cmd-> fetchAll(PDO::FETCH_ASSOC);
+        return $res;
+    }
    
 }
 
