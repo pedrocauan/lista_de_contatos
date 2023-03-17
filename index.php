@@ -74,7 +74,11 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
                                 echo "<td>" . $value . "</td>";
                             }
                         }
-                        ?> <td><a href="">Editar</a><a href="">Excluir</a></td> <?php
+                        ?> <td>
+                            <a href="">Editar</a>
+                            <!-- passa via get o id a ser excluído ao clicar no botão excluir -->
+                            <a href="index.php?id=<?php echo $dados[$i]['id']; ?>">Excluir</a></td>
+                             <?php
                         echo "</tr>";
                     }
                 }
@@ -91,3 +95,14 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
 </body>
 
 </html>
+
+<?php 
+if(isset($_GET["id"])){
+    $id_pessoa = addslashes($_GET["id"]);
+    $p -> excluirPessoa($id_pessoa);
+    //reinicia a página
+    header("location:index.php");
+}
+
+
+?>

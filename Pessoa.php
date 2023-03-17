@@ -44,9 +44,14 @@ class Pessoa
             $cmd -> execute();
             return true;
         }
-
         //retorna falso caso o email não exista
         return false;
+    }
+
+    public function excluirPessoa($id){
+        $cmd = $this -> pdo -> prepare("DELETE  FROM pessoa WHERE id = :id");
+        $cmd -> bindValue(":id", $id);
+        $cmd -> execute();
     }
 
     
