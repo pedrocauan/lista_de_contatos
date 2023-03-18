@@ -23,15 +23,14 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
         if (!empty($_POST)) {
             //---------------- EDITAR ----------------
             if (isset($_GET["id_up"]) && !empty($_GET["id_up"])) {
-                $id_update = addslashes($_GET["id_up"]);
-                $nome = (string) addslashes($_POST["nome"]);
-                $telefone = (string) addslashes($_POST["telefone"]);
-                $email = (string) addslashes($_POST["email"]);
-
+                $id_update = strip_tags(htmlspecialchars($_GET["id_up"]));
+                $nome = (string) strip_tags(htmlspecialchars(($_POST["nome"])));
+                $telefone = (string)  strip_tags(htmlspecialchars(($_POST["telefone"]))); 
+                $email = (string) strip_tags(htmlspecialchars(($_POST["email"]))); 
                 // Verifica se os campos estao vazios
                 if (!empty($nome) && !empty($telefone) && !empty($email)) {
                     //Ve se o usuario já está cadastrado
-                    $p-> atualizarDados($id_update, $nome, $telefone, $email);
+                    $p->atualizarDados($id_update, $nome, $telefone, $email);
                     header("location:index.php");
                 } else {
                     echo "Preencha todos os campos";
@@ -39,9 +38,9 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
             }
             // -------------- CADASTRAR ----------------
             else {
-                $nome = (string) addslashes($_POST["nome"]);
-                $telefone = (string) addslashes($_POST["telefone"]);
-                $email = (string) addslashes($_POST["email"]);
+                $nome = (string) strip_tags(htmlspecialchars(($_POST["nome"])));
+                $telefone = (string)  strip_tags(htmlspecialchars(($_POST["telefone"]))); 
+                $email = (string) strip_tags(htmlspecialchars(($_POST["email"]))); 
 
                 // Verifica se os campos estao vazios
                 if (!empty($nome) && !empty($telefone) && !empty($email)) {
