@@ -8,5 +8,11 @@ lsita de contatos em php
         1. [X] - função buscarDados() (READ) 
         1. [X] - Listar dados na tabela de contatos
     1. [X] - CREATE 
-        1. [X] - Função cadastrarPessoa()
+        1. [X] - Função cadastrarPessoa() (CREATE)
         1. [X] - Pegar os parametros no front end
+    1.  [X] - DELETE
+        1.  [X] - Função excluirPessoa() (DELETE)
+        1.  [X] - pegando parametros no front end
+    1. [X] - UPDATE 
+        1. [X] - Função buscarDadosPessoa()
+        1. [ ] - Função atualizarPessoa()

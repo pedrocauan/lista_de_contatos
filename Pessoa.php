@@ -54,5 +54,21 @@ class Pessoa
         $cmd -> execute();
     }
 
+    public function buscarDadosPessoa($id) {
+        $res  = array();
+
+        $cmd = $this -> pdo -> prepare("SELECT * FROM pessoa WHERE id = :id");
+        $cmd -> bindValue(":id", $id);
+        $cmd -> execute();
+        
+        $res = $cmd -> fetch(PDO::FETCH_ASSOC);
+
+        return $res;
+    }
+
+    public function atualizarDados(){
+
+    }
+
     
 }
