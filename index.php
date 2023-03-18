@@ -18,52 +18,78 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
 
 <body>
     <div class="main-container">
-        <?php 
-            // Ve se o formulário foi enviado
-            if(!empty($_POST)){
+        <?php
+        // CLICOU NO BOTAO CADASTRAR OU EDITAR
+        if (!empty($_POST)) {
+            //---------------- EDITAR ----------------
+            if (isset($_GET["id_up"]) && !empty($_GET["id_up"])) {
+                $id_update = addslashes($_GET["id_up"]);
                 $nome = (string) addslashes($_POST["nome"]);
                 $telefone = (string) addslashes($_POST["telefone"]);
                 $email = (string) addslashes($_POST["email"]);
 
                 // Verifica se os campos estao vazios
-                if(!empty($nome) && !empty($telefone) && !empty($email)){
+                if (!empty($nome) && !empty($telefone) && !empty($email)) {
                     //Ve se o usuario já está cadastrado
-                    if(!$p -> cadastrarPessoa($nome, $telefone, $email)){
-                        echo "Email já cadastrado";
-                    }
-                }   
-                else{
+                    $p-> atualizarDados($id_update, $nome, $telefone, $email);
+                    header("location:index.php");
+                } else {
                     echo "Preencha todos os campos";
                 }
             }
+            // -------------- CADASTRAR ----------------
+            else {
+                $nome = (string) addslashes($_POST["nome"]);
+                $telefone = (string) addslashes($_POST["telefone"]);
+                $email = (string) addslashes($_POST["email"]);
+
+                // Verifica se os campos estao vazios
+                if (!empty($nome) && !empty($telefone) && !empty($email)) {
+                    //Ve se o usuario já está cadastrado
+                    if (!$p->cadastrarPessoa($nome, $telefone, $email)) {
+                        echo "Email já cadastrado";
+                    }
+                } else {
+                    echo "Preencha todos os campos";
+                }
+            }
+        }
         ?>
 
-        <?php 
-            if(isset($_GET["id_up"])){
-                $id_update = addslashes($_GET["id_up"]);
+        <?php
+        if (isset($_GET["id_up"])) {
+            $id_update = addslashes($_GET["id_up"]);
 
-                $res = $p -> buscarDadosPessoa($id_update);
+            $res = $p->buscarDadosPessoa($id_update);
+        }
 
-
-            }
-        
         ?>
         <section id="esquerda">
             <form action="" method="POST">
                 <h2>Cadastrar Pessoa</h2>
                 <!-- Campo Nome-->
                 <label for="nome">Nome</label>
-                <input type="text" name="nome" id="nome" value="<?php if(isset($res)){ echo $res['nome']; } ?>">
+                <input type="text" name="nome" id="nome" value="<?php if (isset($res)) {
+                                                                    echo $res['nome'];
+                                                                } ?>">
 
                 <!-- Campo Telefone-->
                 <label for="telefone">Telefone</label>
-                <input type="text" name="telefone" id="telefone" value="<?php if(isset($res)){ echo $res['telefone']; } ?>">
+                <input type="text" name="telefone" id="telefone" value="<?php if (isset($res)) {
+                                                                            echo $res['telefone'];
+                                                                        } ?>">
 
                 <!-- Campo Email-->
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email" value="<?php if(isset($res)){ echo $res['email']; } ?>">
+                <input type="text" name="email" id="email" value="<?php if (isset($res)) {
+                                                                        echo $res['email'];
+                                                                    } ?>">
 
-                <input type="submit"  value="<?php if(isset($res)){ echo "atualizar"; } else { echo "cadastrar"; } ?>">
+                <input type="submit" value="<?php if (isset($res)) {
+                                                echo "atualizar";
+                                            } else {
+                                                echo "cadastrar";
+                                            } ?>">
 
             </form>
         </section>
@@ -85,11 +111,12 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
                                 echo "<td>" . $value . "</td>";
                             }
                         }
-                        ?> <td>
+                ?> <td>
                             <a href="index.php?id_up=<?php echo $dados[$i]['id'] ?>">Editar</a>
                             <!-- passa via get o id a ser excluído ao clicar no botão excluir -->
-                            <a href="index.php?id=<?php echo $dados[$i]['id']; ?>">Excluir</a></td>
-                             <?php
+                            <a href="index.php?id=<?php echo $dados[$i]['id']; ?>">Excluir</a>
+                        </td>
+                <?php
                         echo "</tr>";
                     }
                 }
@@ -107,11 +134,11 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
 
 </html>
 
-<?php 
-//deleta o usuario
-if(isset($_GET["id"])){
+<?php
+//deleta o usuario quando clica no 
+if (isset($_GET["id"])) {
     $id_pessoa = addslashes($_GET["id"]);
-    $p -> excluirPessoa($id_pessoa);
+    $p->excluirPessoa($id_pessoa);
     //reinicia a página
     header("location:index.php");
 }

@@ -15,4 +15,4 @@ lsita de contatos em php
         1.  [X] - pegando parametros no front end
     1. [X] - UPDATE 
         1. [X] - Função buscarDadosPessoa()
-        1. [ ] - Função atualizarPessoa()
+        1. [X] - Função atualizarPessoa()
