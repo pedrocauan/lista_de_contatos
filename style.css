@@ -75,3 +75,22 @@ a{
 h2{
     text-align: center;
 }
+
+.aviso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.aviso img {
+    width: 100px;
+}
+
+.alinhar {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+

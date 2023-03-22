@@ -16,3 +16,5 @@ lsita de contatos em php
     1. [X] - UPDATE 
         1. [X] - Função buscarDadosPessoa()
         1. [X] - Função atualizarPessoa()
+    1. [X] - Correções de segurança
+    1. [X] - Ajustes no layout

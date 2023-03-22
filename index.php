@@ -18,80 +18,96 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
 
 <body>
     <div class="main-container">
-        <?php
-        // CLICOU NO BOTAO CADASTRAR OU EDITAR
-        if (!empty($_POST)) {
-            //---------------- EDITAR ----------------
-            if (isset($_GET["id_up"]) && !empty($_GET["id_up"])) {
-                $id_update = strip_tags(htmlspecialchars($_GET["id_up"]));
-                $nome = (string) strip_tags(htmlspecialchars(($_POST["nome"])));
-                $telefone = (string)  strip_tags(htmlspecialchars(($_POST["telefone"]))); 
-                $email = (string) strip_tags(htmlspecialchars(($_POST["email"]))); 
-                // Verifica se os campos estao vazios
-                if (!empty($nome) && !empty($telefone) && !empty($email)) {
-                    //Ve se o usuario já está cadastrado
-                    $p->atualizarDados($id_update, $nome, $telefone, $email);
-                    header("location:index.php");
-                } else {
-                    echo "Preencha todos os campos";
-                }
-            }
-            // -------------- CADASTRAR ----------------
-            else {
-                $nome = (string) strip_tags(htmlspecialchars(($_POST["nome"])));
-                $telefone = (string)  strip_tags(htmlspecialchars(($_POST["telefone"]))); 
-                $email = (string) strip_tags(htmlspecialchars(($_POST["email"]))); 
-
-                // Verifica se os campos estao vazios
-                if (!empty($nome) && !empty($telefone) && !empty($email)) {
-                    //Ve se o usuario já está cadastrado
-                    if (!$p->cadastrarPessoa($nome, $telefone, $email)) {
-                        echo "Email já cadastrado";
+        <div class="alinhar">
+            <?php
+            // CLICOU NO BOTAO CADASTRAR OU EDITAR
+            if (!empty($_POST)) {
+                //---------------- EDITAR ----------------
+                if (isset($_GET["id_up"]) && !empty($_GET["id_up"])) {
+                    $id_update = strip_tags(htmlspecialchars($_GET["id_up"]));
+                    $nome = (string) strip_tags(htmlspecialchars(($_POST["nome"])));
+                    $telefone = (string)  strip_tags(htmlspecialchars(($_POST["telefone"])));
+                    $email = (string) strip_tags(htmlspecialchars(($_POST["email"])));
+                    // Verifica se os campos estao vazios
+                    if (!empty($nome) && !empty($telefone) && !empty($email)) {
+                        //Ve se o usuario já está cadastrado
+                        $p->atualizarDados($id_update, $nome, $telefone, $email);
+                        header("location:index.php");
+                    } else {
+                        ?>
+                        <div class="aviso">
+                            <h4 class="preencha">Preencha todos os campos</h4>
+                        </div>
+                        <?php
                     }
-                } else {
-                    echo "Preencha todos os campos";
+                }
+                // -------------- CADASTRAR ----------------
+                else {
+                    $nome = (string) strip_tags(htmlspecialchars(($_POST["nome"])));
+                    $telefone = (string)  strip_tags(htmlspecialchars(($_POST["telefone"])));
+                    $email = (string) strip_tags(htmlspecialchars(($_POST["email"])));
+
+                    // Verifica se os campos estao vazios
+                    if (!empty($nome) && !empty($telefone) && !empty($email)) {
+                        //Ve se o usuario já está cadastrado
+                        if (!$p->cadastrarPessoa($nome, $telefone, $email)) {
+            ?>
+                            <div class="aviso">
+                                <img src="aviso.png" alt="bandeira de alerta amarelo">
+                                <h4>Email já cadastrado</h4>
+                            </div>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <div class="aviso">
+                            <img src="aviso.png" alt="bandeira de alerta amarelo">
+                            <h4>Preencha todos os campos</h4>
+                        </div>
+            <?php
+                    }
                 }
             }
-        }
-        ?>
+            ?>
 
-        <?php
-        if (isset($_GET["id_up"])) {
-            $id_update = addslashes($_GET["id_up"]);
+            <?php
+            if (isset($_GET["id_up"])) {
+                $id_update = addslashes($_GET["id_up"]);
 
-            $res = $p->buscarDadosPessoa($id_update);
-        }
+                $res = $p->buscarDadosPessoa($id_update);
+            }
 
-        ?>
-        <section id="esquerda">
-            <form action="" method="POST">
-                <h2>Cadastrar Pessoa</h2>
-                <!-- Campo Nome-->
-                <label for="nome">Nome</label>
-                <input type="text" name="nome" id="nome" value="<?php if (isset($res)) {
-                                                                    echo $res['nome'];
-                                                                } ?>">
-
-                <!-- Campo Telefone-->
-                <label for="telefone">Telefone</label>
-                <input type="text" name="telefone" id="telefone" value="<?php if (isset($res)) {
-                                                                            echo $res['telefone'];
-                                                                        } ?>">
-
-                <!-- Campo Email-->
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email" value="<?php if (isset($res)) {
-                                                                        echo $res['email'];
+            ?>
+            <section id="esquerda">
+                <form action="" method="POST">
+                    <h2>Cadastrar Pessoa</h2>
+                    <!-- Campo Nome-->
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="nome" value="<?php if (isset($res)) {
+                                                                        echo $res['nome'];
                                                                     } ?>">
 
-                <input type="submit" value="<?php if (isset($res)) {
-                                                echo "atualizar";
-                                            } else {
-                                                echo "cadastrar";
-                                            } ?>">
+                    <!-- Campo Telefone-->
+                    <label for="telefone">Telefone</label>
+                    <input type="text" name="telefone" id="telefone" value="<?php if (isset($res)) {
+                                                                                echo $res['telefone'];
+                                                                            } ?>">
 
-            </form>
-        </section>
+                    <!-- Campo Email-->
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" value="<?php if (isset($res)) {
+                                                                            echo $res['email'];
+                                                                        } ?>">
+
+                    <input type="submit" value="<?php if (isset($res)) {
+                                                    echo "atualizar";
+                                                } else {
+                                                    echo "cadastrar";
+                                                } ?>">
+
+                </form>
+            </section>
+        </div>
         <section id="direita">
             <table>
                 <tr id="titulo">
@@ -115,13 +131,17 @@ $p = new Pessoa("CRUDPDO", "localhost", "usuario", "");
                             <!-- passa via get o id a ser excluído ao clicar no botão excluir -->
                             <a href="index.php?id=<?php echo $dados[$i]['id']; ?>">Excluir</a>
                         </td>
-                <?php
+                    <?php
                         echo "</tr>";
                     }
                 }
                 //banco vazio
                 else {
-                    echo "Ainda não há pessoas cadastradas";
+                    ?>
+                    <div class="aviso">
+                        <h4>Ainda não há pessoas cadastradas</h4>
+                    </div>
+                <?php
                 }
                 ?>
 
